@@ -1,5 +1,6 @@
 package com.srmhackathon.credible;
 
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,15 +8,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText url;
 
     private int com;
 
+    private StrictMode.ThreadPolicy policy;
+
     private String urlcheck;
 
+    private String urlchecked;
+
     private String host;
+
+    private String SCOOPWHOOP_TITLE = "artTitle";
+
+    private String SCOOPWHOOP_CONTENT = "sw_para";
 
     private Button submit;
 
@@ -23,6 +37,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
 
         url = (EditText) findViewById(R.id.url);
 
@@ -46,35 +64,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         com = urlcheck.indexOf(".com");
 
-        urlcheck = urlcheck.substring(0, com);
+        urlchecked = urlcheck.substring(0, com);
 
-        if (urlcheck.contains("scoopwhoop")) {
+        if (urlchecked.contains("scoopwhoop")) {
 
             host = "Scoopwhoop";
 
-            alert("HOST: SCOOPWHOOP");
+            scrapeData(host);
 
-        }
-
-        else if ((urlcheck.contains("buzzfeed"))) {
+        } else if ((urlchecked.contains("buzzfeed"))) {
 
             host = "Buzzfeed";
 
             alert("HOST: BUZZFEED");
 
-        }
-
-        else if ((urlcheck.contains("menxp"))) {
+        } else if ((urlchecked.contains("menxp"))) {
 
             host = "MenXP";
 
             alert("HOST: MENXP");
 
-        }
-
-        else {
+        } else {
 
             alert("Not Yet Supported");
+
+        }
+
+    }
+
+
+    private void scrapeData(String host) {
+
+        if (host.equalsIgnoreCase("scoopwhoop")) {
+
+            try {
+
+                Document doc = Jsoup.connect(urlcheck).get();
+
+                alert(doc.toString());
+
+            } catch (IOException io) {
+
+                alert(io.toString());
+
+            }
 
         }
 
