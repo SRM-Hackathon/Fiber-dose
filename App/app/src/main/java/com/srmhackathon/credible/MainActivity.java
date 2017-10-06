@@ -26,6 +26,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String scoopwhoop_title;
 
     private String scoopwhoop_content;
+
+    private String test;
 
     private String USERNAME = "6a872cfb-9761-41ce-a308-271a80101b0a";
 
@@ -116,9 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
 
-        }
-
-        else {
+        } else {
 
             alert("The URL Cannot Be Empty!");
 
@@ -158,6 +160,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 alert(io.toString());
 
             }
+
+        }
+
+    }
+
+    private void google() {
+
+        try {
+
+            int i = 0;
+
+            int j = 0;
+
+            ArrayList<String> top5 = new ArrayList<String>();
+
+            Document doc = Jsoup.connect("https://www.google.com/search?q=rahul+gandhi+ai").get();
+
+            Elements title = doc.select("div.srg").select("h3.r").remove();
+
+            while (i < 5) {
+
+                for (Element element : title) {
+
+                    top5.add(element.text());
+
+                    i++;
+
+                }
+
+            }
+
+        } catch (IOException io) {
+
+            alert(io.toString());
 
         }
 
@@ -206,17 +242,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 alert(textscore);
 
-            }
-
-            catch (JSONException je) {
+            } catch (JSONException je) {
 
                 alert(je.toString());
 
             }
 
-        }
-
-        else {
+        } else {
 
             alert("Invalid Context");
 
