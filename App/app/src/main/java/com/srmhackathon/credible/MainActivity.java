@@ -11,7 +11,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private EditText url;
 
+    private int com;
+
     private String urlcheck;
+
+    private String host;
 
     private Button submit;
 
@@ -38,9 +42,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void hostDetection() {
 
-        urlcheck = url.getText().toString().trim().substring(0, urlcheck.indexOf(".com"));
+        urlcheck = url.getText().toString().trim();
 
-        alert(urlcheck);
+        com = urlcheck.indexOf(".com");
+
+        urlcheck = urlcheck.substring(0, com);
+
+        if (urlcheck.contains("scoopwhoop")) {
+
+            host = "Scoopwhoop";
+
+            alert("HOST: SCOOPWHOOP");
+
+        }
+
+        else if ((urlcheck.contains("buzzfeed"))) {
+
+            host = "Buzzfeed";
+
+            alert("HOST: BUZZFEED");
+
+        }
+
+        else if ((urlcheck.contains("menxp"))) {
+
+            host = "MenXP";
+
+            alert("HOST: MENXP");
+
+        }
+
+        else {
+
+            alert("Not Yet Supported");
+
+        }
 
     }
 
@@ -51,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v == submit) {
 
             hostDetection();
-            
+
         }
 
     }
