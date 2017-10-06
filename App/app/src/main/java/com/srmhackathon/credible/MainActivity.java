@@ -7,9 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String urlchecked;
 
     private String host;
+
+    private String content;
 
     private String SCOOPWHOOP_TITLE = "artTitle";
 
@@ -101,7 +104,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 Document doc = Jsoup.connect(urlcheck).get();
 
-                alert(doc.toString());
+                Elements articles = doc.select("div.articleContentData").select("p");
+
+                for (Element element : articles) {
+
+                    content+= element.text();
+
+                }
+
+                alert(content);
 
             } catch (IOException io) {
 
