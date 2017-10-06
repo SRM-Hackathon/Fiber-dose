@@ -3,10 +3,20 @@ package com.srmhackathon.credible;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalysisResults;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalyzeOptions;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.EntitiesOptions;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Features;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.KeywordsOptions;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.SentimentOptions;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -28,7 +38,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String host;
 
-    private String content;
+    private String scoopwhoop_title;
+
+    private String scoopwhoop_content;
 
     private String SCOOPWHOOP_TITLE = "artTitle";
 
@@ -61,35 +73,72 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    private void watsonNLU(String text) {
+
+        NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(NaturalLanguageUnderstanding.VERSION_DATE_2017_02_27, "6a872cfb-9761-41ce-a308-271a80101b0a", "VF1nPTAeKpNt");
+
+
+        SentimentOptions sentimentOptions = new SentimentOptions.Builder()
+                .document(true)
+                .build();
+
+        Features features = new Features.Builder()
+                .sentiment(sentimentOptions)
+                .build();
+
+        AnalyzeOptions parameters = new AnalyzeOptions.Builder()
+                .text(text)
+                .features(features)
+                .build();
+
+        AnalysisResults response = service
+                .analyze(parameters)
+                .execute();
+
+        Log.d("JSON",response.toString());
+
+    }
+
+
     private void hostDetection() {
 
-        urlcheck = url.getText().toString().trim();
+        if (urlcheck != "") {
 
-        com = urlcheck.indexOf(".com");
+            urlcheck = url.getText().toString().trim();
 
-        urlchecked = urlcheck.substring(0, com);
+            com = urlcheck.indexOf(".com");
 
-        if (urlchecked.contains("scoopwhoop")) {
+            urlchecked = urlcheck.substring(0, com);
 
-            host = "Scoopwhoop";
+            if (urlchecked.contains("scoopwhoop")) {
 
-            scrapeData(host);
+                host = "Scoopwhoop";
 
-        } else if ((urlchecked.contains("buzzfeed"))) {
+                scrapeData(host);
 
-            host = "Buzzfeed";
+            } else if ((urlchecked.contains("buzzfeed"))) {
 
-            alert("HOST: BUZZFEED");
+                host = "Buzzfeed";
 
-        } else if ((urlchecked.contains("menxp"))) {
+                alert("HOST: BUZZFEED");
 
-            host = "MenXP";
+            } else if ((urlchecked.contains("menxp"))) {
 
-            alert("HOST: MENXP");
+                host = "MenXP";
 
-        } else {
+                alert("HOST: MENXP");
 
-            alert("Not Yet Supported");
+            } else {
+
+                alert("Not Yet Supported");
+
+            }
+
+        }
+
+        else {
+
+            alert("The URL Cannot Be Empty!");
 
         }
 
@@ -104,15 +153,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 Document doc = Jsoup.connect(urlcheck).get();
 
-                Elements articles = doc.select("div.articleContentData").select("p");
+                Elements title = doc.select("h1." + SCOOPWHOOP_TITLE);
 
-                for (Element element : articles) {
+                Elements body = doc.select("h1." + SCOOPWHOOP_CONTENT).select("p");
 
-                    content+= element.text();
+                for (Element element : title) {
+
+                    scoopwhoop_title = element.text();
 
                 }
 
-                alert(content);
+                for (Element element : body) {
+
+                    scoopwhoop_content += element.text();
+
+                }
+
+                watsonNLU(scoopwhoop_title);
 
             } catch (IOException io) {
 
