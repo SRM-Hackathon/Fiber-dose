@@ -1,0 +1,72 @@
+TEXT: "A Woman Lost Her Baby & Damaged Her Uterus After Nurses Tried To Deliver It Like In ‘3 Idiots’"
+
+
+
+SENTIMENT: {
+ "sentiment": {
+  "document": {
+   "score": -0.802465,
+   "label": "negative"
+  }
+ }
+}
+
+
+
+EMOTION: {
+ "emotion": {
+  "document": {
+   "emotion": {
+    "sadness": 0.452531,
+    "joy": 0.021827,
+    "fear": 0.038161,
+    "disgust": 0.330194,
+    "anger": 0.4947
+   }
+  }
+ }
+}
+
+
+
+KEYWORDS: {
+ "keywords": [
+  {
+   "text": "Uterus",
+   "relevance": 0.931532
+  },
+  {
+   "text": "Idiots",
+   "relevance": 0.852767
+  },
+  {
+   "text": "Nurses",
+   "relevance": 0.741753
+  },
+  {
+   "text": "Woman",
+   "relevance": 0.54219
+  },
+  {
+   "text": "Baby",
+   "relevance": 0.536759
+  }
+ ]
+}
+
+
+
+CONCEPTS: {
+ "concepts": [
+  {
+   "text": "Childbirth",
+   "relevance": 0.878379,
+   "dbpedia_resource": "http://dbpedia.org/resource/Childbirth"
+  },
+  {
+   "text": "Woman",
+   "relevance": 0.72744,
+   "dbpedia_resource": "http://dbpedia.org/resource/Woman"
+  }
+ ]
+}

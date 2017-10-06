@@ -1,0 +1,208 @@
+TEXT: "While this method worked in the movie 3 Idiots, real life took a much more tragic turn. According to India Today,
+through the birthing over the phone. In the process however, nurses attempted a caesarean operation which went completely awry,
+as they didn't just lose the baby but also damaged Aarti's uterus. Aarti's husband Kalpatru Samal said, "When we contacted
+Dr Rashmikant Patra, he asked us to get her admitted in the hospital. He informed us that he is not present in the hospital
+but will coordinate with the nurses for proper care once we get her admitted in the hospital. He did not arrive even when the
+condition of my wife got critical. I don't know who did it but my wife was operated upon and we lost our first baby. My wife's
+uterus is also damaged. The nurses said that they had coordinated with the doctor over the phone and had given their 100 per
+cent. It is only because of their negligence of the hospital authority."He has now filed an FIR against the doctor, and police have registered a case of negligence against him."
+
+
+
+URL: https://www.scoopwhoop.com/baby-dies-when-nurse-tries-to-deliver-in-3-idiots-style
+
+
+
+SENTIMENT: {
+ "sentiment": {
+  "document": {
+   "score": -0.644028,
+   "label": "negative"
+  }
+ }
+}}
+
+
+
+EMOTIONS: {
+ "emotion": {
+  "document": {
+   "emotion": {
+    "sadness": 0.683272,
+    "joy": 0.095966,
+    "fear": 0.144211,
+    "disgust": 0.162729,
+    "anger": 0.192607
+   }
+  }
+ }
+}
+
+
+
+KEYWORDS: {
+ "keywords": [
+  {
+   "text": "Rashmikant Patra",
+   "relevance": 0.964503
+  },
+  {
+   "text": "Dr. Rashmikant Patra",
+   "relevance": 0.932415
+  },
+  {
+   "text": "Dr Rashmikant Patra",
+   "relevance": 0.868578
+  },
+  {
+   "text": "husband Kalpatru Samal",
+   "relevance": 0.840321
+  },
+  {
+   "text": "nurses",
+   "relevance": 0.693211
+  },
+  {
+   "text": "tragic turn",
+   "relevance": 0.689011
+  },
+  {
+   "text": "Aarti",
+   "relevance": 0.687694
+  },
+  {
+   "text": "real life",
+   "relevance": 0.673394
+  },
+  {
+   "text": "caesarean operation",
+   "relevance": 0.669282
+  },
+  {
+   "text": "hospital",
+   "relevance": 0.654853
+  },
+  {
+   "text": "proper care",
+   "relevance": 0.636675
+  },
+  {
+   "text": "hospital authority",
+   "relevance": 0.609081
+  },
+  {
+   "text": "wife",
+   "relevance": 0.561132
+  },
+  {
+   "text": "uterus",
+   "relevance": 0.556533
+  },
+  {
+   "text": "Source",
+   "relevance": 0.504545
+  },
+  {
+   "text": "negligence",
+   "relevance": 0.500024
+  },
+  {
+   "text": "phone",
+   "relevance": 0.497075
+  },
+  {
+   "text": "baby",
+   "relevance": 0.495823
+  },
+  {
+   "text": "doctor",
+   "relevance": 0.47981
+  },
+  {
+   "text": "Idiots",
+   "relevance": 0.471889
+  },
+  {
+   "text": "birthing",
+   "relevance": 0.464138
+  },
+  {
+   "text": "Advertisement",
+   "relevance": 0.462054
+  },
+  {
+   "text": "cent",
+   "relevance": 0.455138
+  },
+  {
+   "text": "method",
+   "relevance": 0.452868
+  },
+  {
+   "text": "FIR",
+   "relevance": 0.452816
+  },
+  {
+   "text": "movie",
+   "relevance": 0.452776
+  },
+  {
+   "text": "India",
+   "relevance": 0.452081
+  },
+  {
+   "text": "Metro",
+   "relevance": 0.450969
+  },
+  {
+   "text": "process",
+   "relevance": 0.44763
+  }
+ ]
+}
+
+
+CONCEPTS: {
+ "concepts": [
+  {
+   "text": "Childbirth",
+   "relevance": 0.939825,
+   "dbpedia_resource": "http://dbpedia.org/resource/Childbirth"
+  },
+  {
+   "text": "Doctor Who",
+   "relevance": 0.702197,
+   "dbpedia_resource": "http://dbpedia.org/resource/Doctor_Who"
+  },
+  {
+   "text": "The Authority",
+   "relevance": 0.694538,
+   "dbpedia_resource": "http://dbpedia.org/resource/The_Authority"
+  },
+  {
+   "text": "English-language films",
+   "relevance": 0.561411,
+   "dbpedia_resource": "http://dbpedia.org/resource/English-language_films"
+  },
+  {
+   "text": "Doctor",
+   "relevance": 0.5607,
+   "dbpedia_resource": "http://dbpedia.org/resource/Doctor"
+  },
+  {
+   "text": "Caesarean section",
+   "relevance": 0.545426,
+   "dbpedia_resource": "http://dbpedia.org/resource/Caesarean_section"
+  },
+  {
+   "text": "Jenny Sparks",
+   "relevance": 0.536961,
+   "dbpedia_resource": "http://dbpedia.org/resource/Jenny_Sparks"
+  },
+  {
+   "text": "Husband",
+   "relevance": 0.534291,
+   "dbpedia_resource": "http://dbpedia.org/resource/Husband"
+  }
+ ]
+}
