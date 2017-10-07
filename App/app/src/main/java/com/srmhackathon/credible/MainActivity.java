@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private int com;
 
+    private int 
+
     private float R1_emotion_score = 0;
 
     private float R2_emotion_score = 0;
@@ -54,6 +57,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<String> R1_keywords = new ArrayList<String>();
 
     private ArrayList<String> R2_keywords = new ArrayList<String>();
+
+    private SeekBar titlebodyseek;
+
+    private SeekBar keywordmatchseek;
+
+    private SeekBar googleseek;
 
     private String USERNAME = "6a872cfb-9761-41ce-a308-271a80101b0a";
 
@@ -139,6 +148,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         report = (LinearLayout) findViewById(R.id.report);
 
         highest_emotion = (TextView) findViewById(R.id.highest_emotion);
+
+        titlebodyseek = (SeekBar) findViewById(R.id.titlebodyseek);
+
+        keywordmatchseek = (SeekBar) findViewById(R.id.keywordseek);
+
+        googleseek = (SeekBar) findViewById(R.id.googleseek);
+
+        titlebodyseek.setEnabled(false);
+
+        keywordmatchseek.setEnabled(false);
+
+        googleseek.setEnabled(false);
 
         tk1 = (TextView) findViewById(R.id.tk1);
 
@@ -561,9 +582,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             googleTOP5(GOOGLE_QUERY);
 
-                            start.setVisibility(View.GONE);
-
-                            report.setVisibility(View.VISIBLE);
+                            algorithm();
 
                         }
 
@@ -586,6 +605,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             alert("Invalid Context");
 
         }
+
+    }
+
+
+    private void algorithm() {
+
+        if (gs1.getText().toString().contains(ck1.getText()) ||)
+
+        start.setVisibility(View.GONE);
+
+        report.setVisibility(View.VISIBLE);
 
     }
 
