@@ -18,6 +18,7 @@ import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Fe
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.KeywordsOptions;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.SentimentOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -44,7 +45,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ArrayList<String> top5 = new ArrayList<String>();
 
+    private ArrayList<String> R1_keywords = new ArrayList<String>();
+
     private String R1_highest_emotion;
+
+    private String R1_K1;
+
+    private String R1_K2;
+
+    private String R1_K3;
 
     private String urlcheck;
 
@@ -160,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 }
 
-                watsonNLU(scoopwhoop_content, "R1");
+                watsonNLU("23 amusing ways you could die", "R1");
 
             } catch (IOException io) {
 
@@ -193,6 +202,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     i++;
 
                 }
+
+            }
+
+            for (j=0; j<=5; j++) {
+
+                alert(top5.get(j));
 
             }
 
@@ -244,6 +259,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             try {
 
+                // RESULT
+
                 JSONObject result = new JSONObject(response.toString());
 
 
@@ -261,6 +278,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 JSONObject emotionsdocument = emo.getJSONObject("document");
 
                 JSONObject emoemotions = emotionsdocument.getJSONObject("emotion");
+
+
+                // KEYWORDS
+
 
 
                 // FINAL DECLARATIONS
@@ -293,11 +314,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 }
 
-                alert(R1_highest_emotion + ": " + R1_emotion_score);
-
             } catch (JSONException je) {
 
-                alert(je.toString());
+                alert("YO: "+je.toString());
 
             }
 
