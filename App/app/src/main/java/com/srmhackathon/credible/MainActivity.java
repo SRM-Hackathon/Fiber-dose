@@ -16,6 +16,8 @@ import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Em
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.EntitiesOptions;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Features;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.KeywordsOptions;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.SemanticRolesOptions;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.SemanticRolesSubject;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.SentimentOptions;
 
 import org.json.JSONArray;
@@ -41,19 +43,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private float R1_emotion_score = 0;
 
+    private float R2_emotion_score = 0;
+
     private StrictMode.ThreadPolicy policy;
 
     private ArrayList<String> top5 = new ArrayList<String>();
 
     private ArrayList<String> R1_keywords = new ArrayList<String>();
 
+    private ArrayList<String> R2_keywords = new ArrayList<String>();
+
     private String R1_highest_emotion;
+
+    private String R2_highest_emotion;
 
     private String R1_K1;
 
     private String R1_K2;
 
     private String R1_K3;
+
+    private String R2_K1;
+
+    private String R2_K2;
+
+    private String R2_K3;
 
     private String urlcheck;
 
@@ -62,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String host;
 
     private String R1_textscore;
+
+    private String R2_textscore;
 
     private String scoopwhoop_title;
 
@@ -169,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 }
 
-                watsonNLU("23 amusing ways you could die", "R1");
+                watsonNLU(SCOOPWHOOP_TITLE, "R1");
 
             } catch (IOException io) {
 
@@ -205,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
 
-            for (j=0; j<=5; j++) {
+            for (j = 0; j <= 5; j++) {
 
                 alert(top5.get(j));
 
@@ -238,10 +254,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .limit(5)
                 .build();
 
+        SemanticRolesOptions semanticRolesOptions = new SemanticRolesOptions.Builder()
+                .build();
+
         Features features = new Features.Builder()
                 .sentiment(sentimentOptions)
                 .emotion(emotionOptions)
                 .keywords(keywordsOptions)
+                .semanticRoles(semanticRolesOptions)
                 .build();
 
         AnalyzeOptions parameters = new AnalyzeOptions.Builder()
@@ -282,7 +302,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 // KEYWORDS
 
+                JSONArray key_texts = result.getJSONArray("keywords");
 
+                int emos = key_texts.length();
+
+                if (emos >= 3) {
+
+                    JSONObject check1 = key_texts.getJSONObject(0);
+
+                    JSONObject check2 = key_texts.getJSONObject(1);
+
+                    JSONObject check3 = key_texts.getJSONObject(2);
+
+                    R1_K1 = check1.getString("text");
+
+                    R1_K2 = check2.getString("text");
+
+                    R1_K3 = check3.getString("text");
+
+                } else {
+
+                    if (emos == 1) {
+
+                        JSONObject check1 = key_texts.getJSONObject(0);
+
+                        R1_K1 = check1.getString("text");
+
+                    } else if (emos == 2) {
+
+                        JSONObject check1 = key_texts.getJSONObject(0);
+
+                        JSONObject check2 = key_texts.getJSONObject(1);
+
+                        R1_K1 = check1.getString("text");
+
+                        R1_K2 = check2.getString("text");
+
+                    }
+
+                }
 
                 // FINAL DECLARATIONS
 
@@ -304,6 +362,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             R1_emotion_score = Float.parseFloat(value.toString());
 
+                            watsonNLU(scoopwhoop_content, "R2");
+
                         }
 
                     } catch (JSONException e) {
@@ -316,7 +376,110 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             } catch (JSONException je) {
 
-                alert("YO: "+je.toString());
+                alert(je.toString());
+
+            }
+
+        } else if (context == "R2") {
+
+            try {
+
+                // RESULT
+
+                JSONObject result = new JSONObject(response.toString());
+
+
+                // SCORE
+
+                JSONObject sentiment = result.getJSONObject("sentiment");
+
+                JSONObject scoredocument = sentiment.getJSONObject("document");
+
+
+                // EMOTIONS
+
+                JSONObject emo = result.getJSONObject("emotion");
+
+                JSONObject emotionsdocument = emo.getJSONObject("document");
+
+                JSONObject emoemotions = emotionsdocument.getJSONObject("emotion");
+
+
+                // KEYWORDS
+
+                JSONArray key_texts = result.getJSONArray("keywords");
+
+                int emos = key_texts.length();
+
+                if (emos >= 3) {
+
+                    JSONObject check1 = key_texts.getJSONObject(0);
+
+                    JSONObject check2 = key_texts.getJSONObject(1);
+
+                    JSONObject check3 = key_texts.getJSONObject(2);
+
+                    R2_K1 = check1.getString("text");
+
+                    R2_K2 = check2.getString("text");
+
+                    R2_K3 = check3.getString("text");
+
+                } else {
+
+                    if (emos == 1) {
+
+                        JSONObject check1 = key_texts.getJSONObject(0);
+
+                        R2_K1 = check1.getString("text");
+
+                    } else if (emos == 2) {
+
+                        JSONObject check1 = key_texts.getJSONObject(0);
+
+                        JSONObject check2 = key_texts.getJSONObject(1);
+
+                        R2_K1 = check1.getString("text");
+
+                        R2_K2 = check2.getString("text");
+
+                    }
+
+                }
+
+                // FINAL DECLARATIONS
+
+                R2_textscore = scoredocument.getString("score");
+
+                Iterator<String> iter = emoemotions.keys();
+
+                while (iter.hasNext()) {
+
+                    String key = iter.next();
+
+                    try {
+
+                        Object value = emoemotions.get(key);
+
+                        if (Float.parseFloat(value.toString()) > R2_emotion_score) {
+
+                            R2_highest_emotion = key;
+
+                            R2_emotion_score = Float.parseFloat(value.toString());
+
+                        }
+
+                    } catch (JSONException e) {
+
+                        alert(e.toString());
+
+                    }
+
+                }
+
+            } catch (JSONException je) {
+
+                alert(je.toString());
 
             }
 
