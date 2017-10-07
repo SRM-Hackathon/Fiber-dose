@@ -26,7 +26,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.StringBufferInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -35,7 +38,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private int com;
 
+    private float R1_emotion_score = 0;
+
     private StrictMode.ThreadPolicy policy;
+
+    private ArrayList<String> top5 = new ArrayList<String>();
+
+    private String R1_highest_emotion;
 
     private String urlcheck;
 
@@ -43,13 +52,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String host;
 
-    private String textscore;
+    private String R1_textscore;
 
     private String scoopwhoop_title;
 
     private String scoopwhoop_content;
-
-    private String test;
 
     private String USERNAME = "6a872cfb-9761-41ce-a308-271a80101b0a";
 
@@ -88,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void hostDetection() {
 
-        if (urlcheck != "") {
+        if (!url.getText().toString().isEmpty()) {
 
             urlcheck = url.getText().toString().trim();
 
@@ -165,15 +172,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void google() {
+    private void googleTOP5() {
 
         try {
 
             int i = 0;
 
             int j = 0;
-
-            ArrayList<String> top5 = new ArrayList<String>();
 
             Document doc = Jsoup.connect("https://www.google.com/search?q=rahul+gandhi+ai").get();
 
@@ -212,9 +217,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .document(true)
                 .build();
 
+        KeywordsOptions keywordsOptions = new KeywordsOptions.Builder()
+                .emotion(true)
+                .sentiment(true)
+                .limit(5)
+                .build();
+
         Features features = new Features.Builder()
                 .sentiment(sentimentOptions)
                 .emotion(emotionOptions)
+                .keywords(keywordsOptions)
                 .build();
 
         AnalyzeOptions parameters = new AnalyzeOptions.Builder()
@@ -234,13 +246,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 JSONObject result = new JSONObject(response.toString());
 
+
+                // SCORE
+
                 JSONObject sentiment = result.getJSONObject("sentiment");
 
-                JSONObject document = sentiment.getJSONObject("document");
+                JSONObject scoredocument = sentiment.getJSONObject("document");
 
-                textscore = document.getString("score");
 
-                alert(textscore);
+                // EMOTIONS
+
+                JSONObject emo = result.getJSONObject("emotion");
+
+                JSONObject emotionsdocument = emo.getJSONObject("document");
+
+                JSONObject emoemotions = emotionsdocument.getJSONObject("emotion");
+
+
+                // FINAL DECLARATIONS
+
+                R1_textscore = scoredocument.getString("score");
+
+                Iterator<String> iter = emoemotions.keys();
+
+                while (iter.hasNext()) {
+
+                    String key = iter.next();
+
+                    try {
+
+                        Object value = emoemotions.get(key);
+
+                        if (Float.parseFloat(value.toString()) > R1_emotion_score) {
+
+                            R1_highest_emotion = key;
+
+                            R1_emotion_score = Float.parseFloat(value.toString());
+
+                        }
+
+                    } catch (JSONException e) {
+
+                        alert(e.toString());
+
+                    }
+
+                }
+
+                alert(R1_highest_emotion + ": " + R1_emotion_score);
 
             } catch (JSONException je) {
 
