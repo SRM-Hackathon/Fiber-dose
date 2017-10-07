@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
@@ -53,6 +55,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ArrayList<String> R2_keywords = new ArrayList<String>();
 
+    private String USERNAME = "6a872cfb-9761-41ce-a308-271a80101b0a";
+
+    private String PASSWORD = "VF1nPTAeKpNt";
+
+    private String SCOOPWHOOP_TITLE = "artTitle";
+
+    private String SCOOPWHOOP_CONTENT = "articleContentData";
+
+    private String GOOGLE_QUERY = "";
+
     private String R1_highest_emotion;
 
     private String R2_highest_emotion;
@@ -83,13 +95,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String scoopwhoop_content;
 
-    private String USERNAME = "6a872cfb-9761-41ce-a308-271a80101b0a";
+    private TextView highest_emotion;
 
-    private String PASSWORD = "VF1nPTAeKpNt";
+    private TextView tk1;
 
-    private String SCOOPWHOOP_TITLE = "artTitle";
+    private TextView tk2;
 
-    private String SCOOPWHOOP_CONTENT = "articleContentData";
+    private TextView tk3;
+
+    private TextView ck1;
+
+    private TextView ck2;
+
+    private TextView ck3;
+
+    private TextView gs1;
+
+    private TextView gs2;
+
+    private TextView gs3;
+
+    private TextView gs4;
+
+    private TextView gs5;
+
+    private LinearLayout start;
+
+    private LinearLayout report;
 
     private Button submit;
 
@@ -101,6 +133,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
+
+        start = (LinearLayout) findViewById(R.id.start);
+
+        report = (LinearLayout) findViewById(R.id.report);
+
+        highest_emotion = (TextView) findViewById(R.id.highest_emotion);
+
+        tk1 = (TextView) findViewById(R.id.tk1);
+
+        tk2 = (TextView) findViewById(R.id.tk2);
+
+        tk3 = (TextView) findViewById(R.id.tk3);
+
+        ck1 = (TextView) findViewById(R.id.ck1);
+
+        ck2 = (TextView) findViewById(R.id.ck2);
+
+        ck3 = (TextView) findViewById(R.id.ck3);
+
+        gs1 = (TextView) findViewById(R.id.gs1);
+
+        gs2 = (TextView) findViewById(R.id.gs2);
+
+        gs3 = (TextView) findViewById(R.id.gs3);
+
+        gs4 = (TextView) findViewById(R.id.gs4);
+
+        gs5 = (TextView) findViewById(R.id.gs5);
 
         url = (EditText) findViewById(R.id.url);
 
@@ -185,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 }
 
-                watsonNLU(SCOOPWHOOP_TITLE, "R1");
+                watsonNLU(scoopwhoop_title, "R1");
 
             } catch (IOException io) {
 
@@ -197,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void googleTOP5() {
+    private void googleTOP5(String query) {
 
         try {
 
@@ -205,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             int j = 0;
 
-            Document doc = Jsoup.connect("https://www.google.com/search?q=rahul+gandhi+ai").get();
+            Document doc = Jsoup.connect("https://www.google.com/search?q=" + query).get();
 
             Elements title = doc.select("div.srg").select("h3.r").remove();
 
@@ -221,11 +281,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
 
-            for (j = 0; j <= 5; j++) {
+            gs1.setText(top5.get(0));
 
-                alert(top5.get(j));
+            gs2.setText(top5.get(1));
 
-            }
+            gs3.setText(top5.get(2));
+
+            gs4.setText(top5.get(3));
+
+            gs5.setText(top5.get(4));
 
         } catch (IOException io) {
 
@@ -320,6 +384,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     R1_K3 = check3.getString("text");
 
+                    tk1.setText(R1_K1);
+
+                    tk2.setText(R1_K2);
+
+                    tk3.setText(R1_K3);
+
                 } else {
 
                     if (emos == 1) {
@@ -327,6 +397,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         JSONObject check1 = key_texts.getJSONObject(0);
 
                         R1_K1 = check1.getString("text");
+
+                        tk1.setText(R1_K1);
 
                     } else if (emos == 2) {
 
@@ -337,6 +409,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         R1_K1 = check1.getString("text");
 
                         R1_K2 = check2.getString("text");
+
+                        tk1.setText(R1_K1);
+
+                        tk2.setText(R1_K2);
 
                     }
 
@@ -361,6 +437,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             R1_highest_emotion = key;
 
                             R1_emotion_score = Float.parseFloat(value.toString());
+
+                            highest_emotion.setText(R1_highest_emotion);
 
                             watsonNLU(scoopwhoop_content, "R2");
 
@@ -425,6 +503,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     R2_K3 = check3.getString("text");
 
+                    ck1.setText(R2_K1);
+
+                    ck2.setText(R2_K2);
+
+                    ck3.setText(R2_K3);
+
                 } else {
 
                     if (emos == 1) {
@@ -432,6 +516,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         JSONObject check1 = key_texts.getJSONObject(0);
 
                         R2_K1 = check1.getString("text");
+
+                        ck1.setText(R2_K1);
 
                     } else if (emos == 2) {
 
@@ -442,6 +528,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         R2_K1 = check1.getString("text");
 
                         R2_K2 = check2.getString("text");
+
+                        ck1.setText(R2_K1);
+
+                        ck2.setText(R2_K2);
 
                     }
 
@@ -466,6 +556,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             R2_highest_emotion = key;
 
                             R2_emotion_score = Float.parseFloat(value.toString());
+
+                            GOOGLE_QUERY = scoopwhoop_title.replace(" ", "+");
+
+                            googleTOP5(GOOGLE_QUERY);
+
+                            start.setVisibility(View.GONE);
+
+                            report.setVisibility(View.VISIBLE);
 
                         }
 
